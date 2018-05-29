@@ -76,10 +76,13 @@ void showBan(int[][] b,int[] p)
 
 void kettei(){
   if(player==teban){
-    
-  p[0]=mouseX/CELLSIZE+1;
-  p[1]=mouseY/CELLSIZE+1;
-  
+    p[0]=mouseX/CELLSIZE+1;
+    p[1]=mouseY/CELLSIZE+1;
+    if (mousePressed == true){
+      ban[p[0]][p[1]]=player;
+      teban=-player;
+      p[0]=0;
+    }
     
    }
    else {
@@ -94,11 +97,4 @@ void draw()
 {
   game();
   showBan(ban,p);
-}
-
-
-void mousePressed() {
-  ban[p[0]][p[1]]=player;
-  
-  
 }
