@@ -11,6 +11,19 @@ int player=KURO;
 int teban = KURO;                                // 初手黒
 int[] p=new int [2];                                //プレイヤー位置[0]=x,[1]=y
 
+int[][]scan={
+  {0,-1},
+  {1,-1},
+  {1,0},
+  {1,1},
+  {0,1},
+  {-1,1},
+  {-1,0},
+  {-1,-1}
+};
+
+
+
 
 void setup()
 {
@@ -74,13 +87,20 @@ void showBan(int[][] b,int[] p)
   }
 } 
 
+boolean canput(int color,int x, int y){
+  if (ban[x][y]!=AKI){
+   return false; 
+  }
+  return true;
+}
+
 void kettei(){
   if(player==teban){
     p[0]=mouseX/CELLSIZE+1;
     p[1]=mouseY/CELLSIZE+1;
-    if (mousePressed == true){
+    if (mousePressed == true&&canput(teban,p[0],p[1])==true){
       ban[p[0]][p[1]]=player;
-      teban=-player;
+      teban=-teban;
       p[0]=0;
     }
     
