@@ -23,8 +23,7 @@ int[][]scan={                    //走査用上から時計回りに
   {-1,-1}                    //左上
 };
 
-
-
+String[] xcall={"","A","B","C","D","E","F","G","H"};        //呼び方
 
 void setup()
 {
@@ -88,6 +87,23 @@ void showBan(int[][] b,int[] p)
   }
 } 
 
+void textdraw(String texts){
+  textAlign(CENTER);
+  fill(211,211,211);
+  textSize(45);
+  text(texts,300,300,300,150);
+}
+
+void tebandraw(){
+  String d="";
+  if(teban==KURO){
+  d="黒";}
+  else if (teban==SHIRO)d="白";
+  print(d+"の手番\n");
+}
+
+//-----カラーとｘｙを指定して返すことができるか？できたらひっくり返すか？
+
 boolean canput(int colors,int x, int y, boolean turn){
   boolean ta=false;
   if (ban[x][y]!=AKI){
@@ -110,20 +126,20 @@ boolean canput(int colors,int x, int y, boolean turn){
             if (ban[xx][yy]==colors){
               if (turn==true){
                 int contx = x;int conty = y;
-                while(true){
+                while(true){                                //ひっくり返す
                  ban[contx][conty]=teban;
                  contx += scan[i][0];
                  conty += scan[i][1];
                  if (contx==xx&&conty==yy)break;
                 }
               }
+              //print(xcall[x],y);
               ta=true;
               continue;
             }
             else
               continue;
-        }
-        
+        } 
       }
     }
   }
@@ -132,18 +148,33 @@ boolean canput(int colors,int x, int y, boolean turn){
   return false; 
 }
 
-void kettei(){
+int ALLcantput(int colors){
+  int count=0;
+  for(int xx=1;xx<=8;xx++){
+    for (int yy=1;yy<=8;yy++){
+      if(canput(colors,xx,yy,false)==true){
+        count++;
+      }
+    }
+  }
+  return count;
+}
+
+void game(){
   if(player==teban){
     p[0]=mouseX/CELLSIZE+1;
     p[1]=mouseY/CELLSIZE+1;
     if (mousePressed == true){
       if(canput(teban,p[0],p[1],true)==true){
-        
         teban=-teban;
+        tebandraw();
         p[0]=0;
       }
     }
-    
+    if(ALLcantput(teban)==0){
+      teban=-teban;
+      tebandraw();
+    }
    }
    else {
      p[0]=mouseX/CELLSIZE+1;
@@ -151,18 +182,28 @@ void kettei(){
     if (mousePressed == true){
       if(canput(teban,p[0],p[1],true)==true){
         teban=-teban;
+        tebandraw();
         p[0]=0;
       }
     }
-     
    }
+   if(ALLcantput(teban)==0){
+      teban=-teban;
+      tebandraw();
+    }
 }
-void game(){
-   kettei();
+
+
+void gameset(){
+  textdraw("gameset");
 }
 
 void draw()
 {
   game();
   showBan(ban,p);
+  if(ALLcantput(KURO)==0&&ALLcantput(SHIRO)==0){
+    gameset();
+  }
+    
 }
