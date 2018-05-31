@@ -88,7 +88,8 @@ void showBan(int[][] b,int[] p)
   }
 } 
 
-boolean canput(int colors,int x, int y){
+boolean canput(int colors,int x, int y, boolean turn){
+  boolean ta=false;
   if (ban[x][y]!=AKI){
    return false; 
   }
@@ -107,16 +108,27 @@ boolean canput(int colors,int x, int y){
             break seachloop;
           default:
             if (ban[xx][yy]==colors){
-              return true;
+              if (turn==true){
+                int contx = x;int conty = y;
+                while(true){
+                 ban[contx][conty]=teban;
+                 contx += scan[i][0];
+                 conty += scan[i][1];
+                 if (contx==xx&&conty==yy)break;
+                }
+              }
+              ta=true;
+              continue;
             }
             else
               continue;
-          
         }
         
       }
     }
   }
+  if(ta==true)
+    return true;
   return false; 
 }
 
@@ -125,8 +137,8 @@ void kettei(){
     p[0]=mouseX/CELLSIZE+1;
     p[1]=mouseY/CELLSIZE+1;
     if (mousePressed == true){
-      if(canput(teban,p[0],p[1])==true){
-        ban[p[0]][p[1]]=teban;
+      if(canput(teban,p[0],p[1],true)==true){
+        
         teban=-teban;
         p[0]=0;
       }
@@ -134,6 +146,14 @@ void kettei(){
     
    }
    else {
+     p[0]=mouseX/CELLSIZE+1;
+    p[1]=mouseY/CELLSIZE+1;
+    if (mousePressed == true){
+      if(canput(teban,p[0],p[1],true)==true){
+        teban=-teban;
+        p[0]=0;
+      }
+    }
      
    }
 }
