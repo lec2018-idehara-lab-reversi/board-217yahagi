@@ -11,15 +11,16 @@ int player=KURO;
 int teban = KURO;                                // 初手黒
 int[] p=new int [2];                                //プレイヤー位置[0]=x,[1]=y
 
-int[][]scan={
-  {0,-1},
-  {1,-1},
-  {1,0},
-  {1,1},
-  {0,1},
-  {-1,1},
-  {-1,0},
-  {-1,-1}
+int[][]scan={                    //走査用上から時計回りに
+  {0,0},
+  {0,-1},                    //上
+  {1,-1},                    //右上
+  {1,0},                     //右
+  {1,1},                     //右下
+  {0,1},                     //↓
+  {-1,1},                    //左下
+  {-1,0},                    //左
+  {-1,-1}                    //左上
 };
 
 
@@ -87,21 +88,48 @@ void showBan(int[][] b,int[] p)
   }
 } 
 
-boolean canput(int color,int x, int y){
+boolean canput(int colors,int x, int y){
   if (ban[x][y]!=AKI){
    return false; 
   }
-  return true;
+  for (int i=1;i<=8;i++){
+    int xx=x;int yy=y;
+    xx += scan[i][0];
+    yy += scan[i][1];
+    if (ban[xx][yy]==-colors){
+      seachloop:while(true){
+        xx += scan[i][0];
+        yy += scan[i][1];
+        switch(ban[xx][yy]){
+          case SOTO:
+            break seachloop;
+          case AKI:
+            break seachloop;
+          default:
+            if (ban[xx][yy]==colors){
+              return true;
+            }
+            else
+              continue;
+          
+        }
+        
+      }
+    }
+  }
+  return false; 
 }
 
 void kettei(){
   if(player==teban){
     p[0]=mouseX/CELLSIZE+1;
     p[1]=mouseY/CELLSIZE+1;
-    if (mousePressed == true&&canput(teban,p[0],p[1])==true){
-      ban[p[0]][p[1]]=player;
-      teban=-teban;
-      p[0]=0;
+    if (mousePressed == true){
+      if(canput(teban,p[0],p[1])==true){
+        ban[p[0]][p[1]]=teban;
+        teban=-teban;
+        p[0]=0;
+      }
     }
     
    }
