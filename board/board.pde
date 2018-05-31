@@ -47,6 +47,7 @@ void setup()
   ban[4][4] = KURO;
   p[0]=1;
   p[1]=1;
+  tebandraw(1);
 }
 
 void showBan(int[][] b,int[] p)
@@ -94,12 +95,15 @@ void textdraw(String texts){
   text(texts,300,300,300,150);
 }
 
-void tebandraw(){
+void tebandraw(int put){        //putは1で手番2で色だけ
   String d="";
   if(teban==KURO){
   d="黒";}
   else if (teban==SHIRO)d="白";
-  print(d+"の手番\n");
+  switch(put){
+  case 1:print(d+"の手番\n");break;
+  case 2:print(d);break;
+  }
 }
 
 //-----カラーとｘｙを指定して返すことができるか？できたらひっくり返すか？
@@ -166,31 +170,37 @@ void game(){
     p[1]=mouseY/CELLSIZE+1;
     if (mousePressed == true){
       if(canput(teban,p[0],p[1],true)==true){
+        tebandraw(2);
+        print(xcall[p[0]]+p[1]+"\n");
         teban=-teban;
-        tebandraw();
+        tebandraw(1);
+        
         p[0]=0;
       }
     }
     if(ALLcantput(teban)==0){
       teban=-teban;
-      tebandraw();
+      tebandraw(1);
     }
    }
    else {
-     p[0]=mouseX/CELLSIZE+1;
+    p[0]=mouseX/CELLSIZE+1;
     p[1]=mouseY/CELLSIZE+1;
     if (mousePressed == true){
       if(canput(teban,p[0],p[1],true)==true){
+        tebandraw(2);
+        print(xcall[p[0]]+p[1]+"\n");
         teban=-teban;
-        tebandraw();
+        tebandraw(1);
+        
         p[0]=0;
       }
     }
-   }
-   if(ALLcantput(teban)==0){
+    if(ALLcantput(teban)==0){
       teban=-teban;
-      tebandraw();
+      tebandraw(1);
     }
+   }
 }
 
 
