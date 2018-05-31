@@ -206,6 +206,9 @@ void game(){
 
 void gameset(){
   textdraw("gameset");
+  print("gamesset");
+  if (ALLcantput(KURO)<ALLcantput(SHIRO))print("白の勝ち");
+  if (ALLcantput(KURO)>ALLcantput(SHIRO))print("黒の勝ち");
 }
 
 void draw()
