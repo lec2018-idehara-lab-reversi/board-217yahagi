@@ -179,6 +179,7 @@ void game(){
       }
     }
     if(ALLcantput(teban)==0){
+      print("パス\n");
       teban=-teban;
       tebandraw(1);
     }
@@ -197,6 +198,7 @@ void game(){
       }
     }
     if(ALLcantput(teban)==0){
+      print("パス\n");
       teban=-teban;
       tebandraw(1);
     }
@@ -204,11 +206,13 @@ void game(){
 }
 
 
+
 void gameset(){
   textdraw("gameset");
   print("gamesset");
-  if (ALLcantput(KURO)<ALLcantput(SHIRO))print("白の勝ち");
-  if (ALLcantput(KURO)>ALLcantput(SHIRO))print("黒の勝ち");
+  //if (ALLcantput(KURO)<ALLcantput(SHIRO))print("白の勝ち");
+  //else if (ALLcantput(KURO)>ALLcantput(SHIRO))print("黒の勝ち");
+  //else print("同点");
 }
 
 void draw()
@@ -217,6 +221,12 @@ void draw()
   showBan(ban,p);
   if(ALLcantput(KURO)==0&&ALLcantput(SHIRO)==0){
     gameset();
+    delay(10*1000);
+    exit();
   }
     
+}
+
+class AI{
+  
 }
